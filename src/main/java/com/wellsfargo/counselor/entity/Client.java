@@ -1,44 +1,31 @@
 package com.wellsfargo.counselor.entity;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
-
 @Entity
-@Table(name = "advisors")
-@Data
+@Table(name = "clients")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Advisor {
+@Data
+public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long advisor_id;
-
-
+    private long client_id;
     private String first_name;
-
-
     private String last_name;
-
-
     private String address;
-
-
     private String phone;
-
-
     private String email;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "advisor")
-    private List<Client> clients;
+    @ManyToOne
+    @JoinColumn(name = "advisor_id")
+    private Advisor advisor;
 
+    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
+    private Portfolio portfolio;
 
-    }
-
-
+}
